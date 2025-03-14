@@ -1,8 +1,31 @@
 const express =require("express");
-
-require("./config/database");
+const connectDB =require("./config/database");
 const app =express();
-app.listen(3000 ,()=> 
+const Usermodel=require("./models/user")
+
+
+app.post("/singup", async(req,res)=>
 {
-     console.log("Server is running on port 3000 !!");
+     const userObj= {
+         firstname : "Rajesh",
+         lastname :"Narwade",
+         emailId :"rajeshnarwade67@gmail.com",
+         password :"rajeshh899",
+        
+     }
+     const user = new Usermodel(userObj);
 });
+await user.save();
+
+connectDB()
+.then(() =>
+{
+     console.log("Database connection is established..")
+     app.listen(3000 ,()=> 
+        {
+             console.log("Server is running on port 3000 !!");
+        });
+}).catch((err)=>{
+     console.log("cannot be connected!!");
+}
+);
