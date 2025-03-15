@@ -3,14 +3,14 @@ const connectDB=require("./config/database");
 const app =express();
 const Usermodel=require("./models/user")
 
-
+// go to the postman app
 app.post("/signup", async(req,res)=>
 {
      const userObj= {
-         firstname :"Om",
-         lastname :"Patil",
-         emailId :"omdede67@gmail.com",
-         password :"rsddhvhfi",
+         firstname :"ms",
+         lastname :"Dhoni",
+         emailId :"omsdhoni@gmail.com",
+         password :"rsdsafvhfi",
         
      }
      const user = new Usermodel(userObj);
