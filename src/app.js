@@ -15,6 +15,7 @@ app.post("/signup", async(req,res)=>
       res.status(400).send("Error saving the user "+err.message);
     }
 });
+
 //get user by email
 app.get("/user" , async (req,res)=>{
       const useremail =req.body.emailId;
@@ -49,18 +50,45 @@ app.delete("/delete",async (req,res)=>
 }
 });
 ///update we also use the update but here we are using patch which is use to update the one changein the collaction
-app.patch("/update",async (req,res)=>
+app.patch("/user/:userID",async (req,res)=>
      {
          const data = req.body;
-         const userID = req.body.userID;
+         const userID = req.params?.userID;
+
+         
          console.log(data);
          try{
+
+          const allowedupdate =["Gender","age","about","password","skills", "photoURL"];
+          //     "firstname": "bhushan",
+          //     "lastname": "musk",
+          //     "emailId": "ddfbgsgnsdi@gmail.com",
+          //     "password": "dsv",
+          //     "age": 81,
+          //     "Gender": "others",
+          //     "about": "This is a default about",
+          //   --> "xyz":"anfsinin",
+          // "skills": [
+          //      "java",
+          //      "cpp",
+          //      "php"
+          //    ],
+     
+          const isUpdateAllowed=Object.keys(data).every((k)=>
+           allowedupdate.includes(k));
+     
+          if (!isUpdateAllowed){
+               throw new Error("update not allowed");
+          }
+          if(data?.skills.length>10){
+                throw new Error("skills can not be more then 10");
+          }
               
-         await Usermodel.findByIdAndUpdate({_id:userID},data)
+         await Usermodel.findByIdAndUpdate({_id:userID},data,{runValidators:true})
          res.send("updated");
              }
          catch(err){
-          res.status(400).send("something wrong");
+          res.status(400).send("udpdate failed "+ err.message);
      }});
 
 
