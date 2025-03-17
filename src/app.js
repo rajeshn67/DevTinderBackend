@@ -45,15 +45,12 @@ app.post("/login", async (req, res) => {
     const ispasswardvalid = await bcrypt.compare(password, user.password); //(password,hashedpassword)
     if (ispasswardvalid) {
       //create a JWT token here
-      const token = jwt.sign(
-        { /*hide the user id*/ _id: user._id },
-        /*secretekey*/ "Rajesh@2004"
-      ); //we pun this if we want to expire in some timeperiod{ expiresIn: "1h" }
+      const token = jwt.sign({ /*hide the user id*/ _id: user._id }, /*secretekey*/ "Rajesh@2004",{expiresIn:"1h"}); //we pun this if we want to expire in some timeperiod{ expiresIn: "1h" }
       // console.log(token);
 
       //add the token to cookie and send the response back to the user
 
-      res.cookie("token", token);
+      res.cookie("token", token, { expires: new Date(Date.now() + 1*3600000)});
       res.send("Login successfully");
     } else {
       throw new Error("Invalid credentials");
@@ -70,6 +67,14 @@ app.get("/profile", userAuth, async (req, res) => {
   } catch (err) {
     res.status(400).send("Error:" + err.message);
   }
+});
+
+app.post("/sendconnectionrequest",userAuth ,async(req,res)=>
+{
+   const user= req.user;
+  //sending a connectin request to the user
+  console.log("sending connection request");
+  res.send( user.firstname+" sent the connect request");
 });
 
 //get user by email
