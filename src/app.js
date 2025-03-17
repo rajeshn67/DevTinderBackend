@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 const { userAuth } = require("./middlewares/auth");
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -42,11 +43,11 @@ app.post("/login", async (req, res) => {
     if (!user) {
       throw new Error("Invalid credentials");
     }
-    const ispasswardvalid = await bcrypt.compare(password, user.password); //(password,hashedpassword)
+    const ispasswardvalid = await  user.validatePassword(password);
     if (ispasswardvalid) {
-      //create a JWT token here
-      const token = jwt.sign({ /*hide the user id*/ _id: user._id }, /*secretekey*/ "Rajesh@2004",{expiresIn:"1h"}); //we pun this if we want to expire in some timeperiod{ expiresIn: "1h" }
-      // console.log(token);
+     
+      const token = await user.getJWT();
+     
 
       //add the token to cookie and send the response back to the user
 

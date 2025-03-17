@@ -1,5 +1,7 @@
 const mongoose=require("mongoose");
 const validator = require('validator');
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const userschema= new mongoose.Schema({
      firstname : {
          type :String,
@@ -72,6 +74,22 @@ const userschema= new mongoose.Schema({
 {
     timestamps: true
 });
+
+userschema.methods.getJWT= async function (){
+
+    const user = this;//for perticular instance that is perticular user
+     const token = await jwt.sign({ _id: user._id },"Rajesh@2004",{expiresIn:"1h"});
+     return token;
+    };
+
+userschema.methods.validatePassword = async function (passwordInputByUser){
+
+    const user=this;
+    const passwordHash=user.password
+    const ispasswardvalid = await bcrypt.compare(passwordInputByUser,passwordHash); //(password,hashedpassword)
+  return ispasswardvalid;
+    
+};
 
 const Usermodel =mongoose.model("User" ,userschema);
  module.exports=Usermodel;

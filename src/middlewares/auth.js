@@ -3,6 +3,7 @@ const Usermodel = require("../models/user");
 
 
 
+
 const userAuth= async(req,res,next)=>{
   //read the token from the req cookies
   try{ 
