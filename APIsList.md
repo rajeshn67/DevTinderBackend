@@ -11,8 +11,10 @@
 -PATCH /profile/password
   
 ##Connection request router
--POST /request/send/interested/:userId
--POST /request/send/ignored/:userId
+-POST /request/send/status/:userId
+
+-Status : ignored, interested, accepted, rejected
+
 -POST /request/recview/accepted/:requestId
 -POST /request/recview/rejected/:requestId
 
@@ -22,5 +24,5 @@
 -GET /user/feed -Get you the profiles of other users on platform
 
 
--Status : ignored, interested, accepted, rejected
--
+
+

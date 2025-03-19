@@ -3,8 +3,7 @@ const authRouter=express.Router();
 const { validatesignUpData } = require("../utils/validation");
 const Usermodel = require("../models/user");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const req = require("express/lib/request");
+
 authRouter.post("/signup", async (req, res) => {
   try {
     //validation of the data
@@ -59,5 +58,5 @@ authRouter.post("/logout", async (req,res)=>
 {
   res.cookie("token",null,{expires:new Date(Date.now()),});
   res.send("logout succesfully"); 
-}),
+});
 module.exports=authRouter;

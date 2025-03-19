@@ -52,11 +52,14 @@ const userschema= new mongoose.Schema({
     } ,
    Gender : {  
         type :String,
-        validate(value){   //valid on only at the newcreation of the object not on the existing one durirng when you are updateing the existing one
-             if(!["male","female","others"].includes(value)){
-                 throw new Error("Gender data is not valid");
-             }
-        },
+         enum:["male","female","other"],
+         message:`{VALUE} is not a valid gender type`,
+
+        // validate(value){   //valid on only at the newcreation of the object not on the existing one durirng when you are updateing the existing one
+        //      if(!["male","female","others"].includes(value)){
+        //          throw new Error("Gender data is not valid");
+        //      }
+        // },
     },
     
    about :{
