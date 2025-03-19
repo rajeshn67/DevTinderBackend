@@ -4,6 +4,7 @@ const { validatesignUpData } = require("../utils/validation");
 const Usermodel = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const req = require("express/lib/request");
 authRouter.post("/signup", async (req, res) => {
   try {
     //validation of the data
@@ -53,4 +54,10 @@ authRouter.post("/login", async (req, res) => {
     res.status(400).send("Error:" + err.message);
   }
 });
+
+authRouter.post("/logout", async (req,res)=>
+{
+  res.cookie("token",null,{expires:new Date(Date.now()),});
+  res.send("logout succesfully"); 
+}),
 module.exports=authRouter;

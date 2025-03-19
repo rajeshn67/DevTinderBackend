@@ -58,10 +58,7 @@ const userschema= new mongoose.Schema({
              }
         },
     },
-    Photo :{
-         type :String,
-
-    } ,
+    
    about :{
     type :String,
     default:"This is a default about",
