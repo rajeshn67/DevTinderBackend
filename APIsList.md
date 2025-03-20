@@ -15,12 +15,15 @@
 
 -Status : ignored, interested, accepted, rejected
 
--POST /request/recview/accepted/:requestId
--POST /request/recview/rejected/:requestId
+-POST /request/recview/status/:requestId
+-POST /request/recview/status/:requestId
+-  status: accepted, rejected
 
-33userRouter
--GET /user/connection 
--GET /user/request/
+ 
+##userRouter
+-GET /user/requests/recieved
+-GET /user/connections
+
 -GET /user/feed -Get you the profiles of other users on platform
 
 

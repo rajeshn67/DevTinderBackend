@@ -3,15 +3,17 @@ const connectionRequestSchema = new mongoose.Schema(
   {
     fromUserId: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "User", //reference to the Usermodel collection // after that you can use populate method to get the user details
       required: true,
     },
     toUserId: {
+      ref:"User",//reference to the Usermodel collection // after that you can use populate method to get the sender details
       type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
     status: {
       type: String,
-      required:true,
+      required: true,
       enum: {
         values: ["ignored", "interested", "accepted", "rejected"],
         message: `{VALUE} is incorrect status type`,
