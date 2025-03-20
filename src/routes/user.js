@@ -42,7 +42,7 @@ userRouter.get("/user/connections",userAuth,async(req,res)=>{
 
        const data=connectionRequest.map(row=> 
        {
-         if (row.fromUserId._id.toString() === loggedInUser._id.toString()) {
+         if (row.fromUserId._id.toString() === loggedInUser._id.toString()) { //need to conert to string because it is mongoose id
            return row.toUserId;
          }
          return row.fromUserId;
