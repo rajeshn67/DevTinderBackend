@@ -75,6 +75,8 @@ const userschema= new mongoose.Schema({
     timestamps: true
 });
 
+
+userschema.index({ firstname: 1});
 userschema.methods.getJWT= async function (){
 
     const user = this;//for perticular instance that is perticular user

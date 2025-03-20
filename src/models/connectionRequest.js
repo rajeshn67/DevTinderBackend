@@ -22,6 +22,9 @@ const connectionRequestSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+//compound index to ensure unique connection request
+connectionRequestSchema.index({ fromUserId: 1, toUserId: 1 });//assending order
 connectionRequestSchema.pre("save",function(next){
    const connectionRequest=this;
    //Check if the fromuserId is same as toUserId
