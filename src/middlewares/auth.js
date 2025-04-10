@@ -4,6 +4,7 @@ const Usermodel = require("../models/user");
 
 
 
+
 const userAuth= async(req,res,next)=>{
   //read the token from the req cookies
   try{ 
@@ -12,7 +13,7 @@ const userAuth= async(req,res,next)=>{
     if(!token){
          return res.status(401).send("Please login");
     }
-  const decodedObj = await jwt.verify(token,"Rajesh@2004");
+  const decodedObj = await jwt.verify(token,process.env.JWT_SECRET_KEY);
   const{_id}=decodedObj;
   const user = await Usermodel.findById(_id);
   if(!user)
