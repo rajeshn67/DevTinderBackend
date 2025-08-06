@@ -9,7 +9,7 @@ require("dotenv").config();
 
 app.use(
   cors({
-    origin:"http://localhost:5173", // backend should know where the frontend is running
+    origin:"https://devtinderfrontend-yvi3.onrender.com", // backend should know where the frontend is running
     credentials: true,
   })
 );
