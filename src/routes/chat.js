@@ -13,7 +13,7 @@ chatRouter.get("/chat/:targetUserId", userAuth, async (req, res) => {
       participants: { $all: [userId, targetUserId] },
     }).populate({
       path: "messages.senderId",
-      select: "firstName lastName",
+      select: "firstname lastname",
     });
     if (!chat) {
       chat = new Chat({
@@ -22,7 +22,16 @@ chatRouter.get("/chat/:targetUserId", userAuth, async (req, res) => {
       });
       await chat.save();
     }
-    res.json(chat);
+    // Map messages to include timestamp
+    const chatWithTimestamps = {
+      ...chat.toObject(),
+      messages: chat.messages.map(msg => ({
+        ...msg.toObject(),
+        createdAt: msg.createdAt,
+        updatedAt: msg.updatedAt
+      }))
+    };
+    res.json(chatWithTimestamps);
   } catch (err) {
     console.error(err);
   }
